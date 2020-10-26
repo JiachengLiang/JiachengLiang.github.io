@@ -6,16 +6,19 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>DaphneOdera</title>
+  <title>汇编编程实战一：简单的Hello World!程序实现 | DaphneOdera</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="I am an undergraduate student majoring in Computer Science and Technology from Harbin Institute of Technology. I am very interested in computer vision and deep learning, and I am now engaged in learni">
-<meta property="og:type" content="website">
-<meta property="og:title" content="DaphneOdera">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="这学期开设了汇编与接口技术课程，博主也是第一次接触汇编语言，所以准备通过博客的形式记录自己的学习日常，里面都是博主本人的理解，如有错误希望多多指正。也欢迎一起探讨。 预备知识：MOV指令，LEA指令，中断指令，伪指令首先展示程序： 1234567891011121314151617DATAS  SEGMENT    STRING  DB  &#39;Hello World!&#39;,13,10,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="汇编编程实战一：简单的Hello World!程序实现">
+<meta property="og:url" content="http://example.com/2020/10/26/%E6%B1%87%E7%BC%96%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%9A%E7%AE%80%E5%8D%95%E7%9A%84Hello-World-%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="DaphneOdera">
-<meta property="og:description" content="I am an undergraduate student majoring in Computer Science and Technology from Harbin Institute of Technology. I am very interested in computer vision and deep learning, and I am now engaged in learni">
+<meta property="og:description" content="这学期开设了汇编与接口技术课程，博主也是第一次接触汇编语言，所以准备通过博客的形式记录自己的学习日常，里面都是博主本人的理解，如有错误希望多多指正。也欢迎一起探讨。 预备知识：MOV指令，LEA指令，中断指令，伪指令首先展示程序： 1234567891011121314151617DATAS  SEGMENT    STRING  DB  &#39;Hello World!&#39;,13,10,">
 <meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-10-26T04:50:58.000Z">
+<meta property="article:modified_time" content="2020-10-26T05:55:49.914Z">
 <meta property="article:author" content="Jiacheng Liang">
+<meta property="article:tag" content="汇编程序实现">
 <meta name="twitter:card" content="summary">
   
     <link rel="alternative" href="/atom.xml" title="DaphneOdera" type="application/atom+xml">
@@ -148,16 +151,14 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-    <article id="post-汇编编程实战一：简单的Hello-World-程序实现" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+            <article id="post-汇编编程实战一：简单的Hello-World-程序实现" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/26/%E6%B1%87%E7%BC%96%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%9A%E7%AE%80%E5%8D%95%E7%9A%84Hello-World-%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0/">汇编编程实战一：简单的Hello World!程序实现</a>
+    <h1 class="article-title" itemprop="name">
+      汇编编程实战一：简单的Hello World!程序实现
     </h1>
   
 
@@ -173,11 +174,59 @@
         <p>这学期开设了汇编与接口技术课程，博主也是第一次接触汇编语言，所以准备通过博客的形式记录自己的学习日常，里面都是博主本人的理解，如有错误希望多多指正。也欢迎一起探讨。</p>
 <h3 id="预备知识：MOV指令，LEA指令，中断指令，伪指令"><a href="#预备知识：MOV指令，LEA指令，中断指令，伪指令" class="headerlink" title="预备知识：MOV指令，LEA指令，中断指令，伪指令"></a>预备知识：<strong>MOV指令</strong>，<strong>LEA指令</strong>，<strong>中断指令</strong>，<strong>伪指令</strong></h3><p>首先展示程序：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">DATAS  SEGMENT</span><br><span class="line">    STRING  DB  &#39;Hello World!&#39;,13,10,&#39;$&#39;</span><br><span class="line">DATAS  ENDS</span><br><span class="line"></span><br><span class="line">CODES  SEGMENT</span><br><span class="line">    ASSUME    CS:CODES,DS:DATAS</span><br><span class="line">START:</span><br><span class="line">    MOV  AX,DATAS</span><br><span class="line">    MOV  DS,AX</span><br><span class="line">    LEA  DX,STRING</span><br><span class="line">    MOV  AH,9</span><br><span class="line">    INT  21H</span><br><span class="line"></span><br><span class="line">    MOV  AH,4CH</span><br><span class="line">    INT  21H</span><br><span class="line">CODES  ENDS</span><br><span class="line">    END   START</span><br></pre></td></tr></table></figure>
-        
-          <a class="article-more-a" href="/2020/10/26/%E6%B1%87%E7%BC%96%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%9A%E7%AE%80%E5%8D%95%E7%9A%84Hello-World-%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0/#more">more >></a>
-        
+<a id="more"></a>
+<p>下面是逐行详解：</p>
+<h3 id="1"><a href="#1" class="headerlink" title="1"></a>1</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DATAS  SEGMENT</span><br><span class="line">    STRING  DB  &#39;Hello World!&#39;,13,10,&#39;$&#39;</span><br><span class="line">DATAS  END</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>13表示回车，10表示换行，$是汇编语言定义的一个字符串的结尾标志。回车的含义是鼠标光标移动到行头，换行表示鼠标光标移动到下一行。</p>
+</blockquote>
+<p>这句话定义了一个存储在内存中的段，这个段的起始地址是<strong>DATAS（即DATAS实际上是一个立即数）</strong>。之后在段内定义了一个数据类型是Byte的字符串：Hello World!，字符串的名称是STRING。实际上STRING就是这个字符串的起始地址。</p>
+<h3 id="2"><a href="#2" class="headerlink" title="2"></a>2</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CODES  SEGMENT</span><br><span class="line">        ASSUME    CS:CODES,DS:DATAS</span><br></pre></td></tr></table></figure>
+<p>这部分在内存中定义了一个叫做CODES的段，然后在ASSUME中声明出DATAS段就是数据段，CODES段就是代码段。这样，我们就可以在代码段中写我们的汇编程序了。</p>
+<h3 id="3"><a href="#3" class="headerlink" title="3"></a>3</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">START:</span><br><span class="line">        MOV  AX,DATAS</span><br><span class="line">        MOV  DS,AX</span><br><span class="line">        LEA  DX,STRING</span><br><span class="line">        MOV  AH,9</span><br><span class="line">        INT  21H</span><br><span class="line">    </span><br><span class="line">        MOV  AH,4CH</span><br><span class="line">        INT  21H</span><br><span class="line">    CODES  ENDS</span><br><span class="line">        END   START</span><br></pre></td></tr></table></figure>
+<p>这部分属于代码段的一部分。首先要明确：显示字符串是<strong>MOV AH,9</strong>这个指令实现的，且显示字符串的入口地址是<strong>DS:DX</strong>，所以我们的思路就是，把数据段首地址传到DS段寄存器中，把字符串的首地址传到DX通用寄存器中。接下来我们仍然逐行进行分析：</p>
+<h4 id="3-1"><a href="#3-1" class="headerlink" title="3.1"></a>3.1</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MOV  AX,DATAS</span><br><span class="line">MOV  DS,AX</span><br></pre></td></tr></table></figure>
+<p>汇编语言MOV指令中规定<strong>不能直接用立即数给段寄存器传值</strong>，所以我们需要AX通用寄存器作为中间传递者。这里我们实现了把数据段首地址传到了DS寄存器中了。</p>
+<h4 id="3-2"><a href="#3-2" class="headerlink" title="3.2"></a>3.2</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">LEA  DX,STRING</span><br><span class="line">MOV  AH,9</span><br><span class="line">INT  21H</span><br></pre></td></tr></table></figure>
+<p>这里我们首先把STRING字符串的有效地址传到了DX中，结合3.1的操作，我们实现了入口地址DS:DX的设置。然后我们<strong>调用9号显示字符串功能（MOV AH,9），再让系统开始执行这个功能（INT 21H）</strong>。</p>
+<h4 id="3-3"><a href="#3-3" class="headerlink" title="3.3"></a>3.3</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MOV  AH,4CH</span><br><span class="line">INT  21H</span><br></pre></td></tr></table></figure>
+<p>这是个固定句式，表示返回操作系统。</p>
+<h4 id="3-4"><a href="#3-4" class="headerlink" title="3.4"></a>3.4</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CODES  ENDS</span><br><span class="line">    END   START</span><br></pre></td></tr></table></figure>
+<p>第一行表示结束代码段，第二行表示结束程序。</p>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/ali_pay.jpg">
+                      <span class="reward-type">支付宝</span>
+                    </div>
+                    
+                    
+                    <div class="reward-box-item">
+                      <img class="reward-img" src="/img/wei_xin_pay.png">
+                      <span class="reward-type">微信</span>
+                    </div>
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -197,16 +246,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/26/%E6%B1%87%E7%BC%96%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%9A%E7%AE%80%E5%8D%95%E7%9A%84Hello-World-%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/10/26/%E6%B1%87%E7%BC%96%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%9A%E7%AE%80%E5%8D%95%E7%9A%84Hello-World-%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2020/10/23/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">我的第一篇博客</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -226,164 +334,30 @@
 
 
 
-
   
-    <article id="post-我的第一篇博客" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/23/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">我的第一篇博客</a>
-    </h1>
   
 
-        
-        <a href="/2020/10/23/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/" class="archive-article-date">
-  	<time datetime="2020-10-23T04:18:13.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="摘自《白夜行》"><a href="#摘自《白夜行》" class="headerlink" title="摘自《白夜行》"></a>摘自《白夜行》</h2><p>有些人一辈子都活在太阳的照耀下<br><br>也有些人不得不一直活在漆黑的深夜里<br><br>人害怕的<br><br>就是本来就一直存在的太阳落下不再升起<br><br>也就是非常害怕原本照在身上的光芒消失</p>
-        
-          <a class="article-more-a" href="/2020/10/23/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">测试使用</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/23/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2020/10/23/hello-world/">Hello World</a>
-    </h1>
   
 
-        
-        <a href="/2020/10/23/hello-world/" class="archive-article-date">
-  	<time datetime="2020-10-23T04:10:48.332Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2020-10-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-        
-          <a class="article-more-a" href="/2020/10/23/hello-world/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Automatic System Generation</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2020/10/23/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
+  
 
   
+  <div id="gitment-ctn"></div> 
+<link?rel="stylesheet"?href="https://jjeejj.github.io/css/gitment.css">
+<script?src="https://www.wenjunjiang.win/js/gitment.js"></script>
+<script>
+var gitment = new Gitment({
+  id: "http://example.com/2020/10/26/%E6%B1%87%E7%BC%96%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%9A%E7%AE%80%E5%8D%95%E7%9A%84Hello-World-%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0/",
+  owner: 'JiachengLiang',
+  repo: 'jiachengliang.github.io',
+  oauth: {
+    client_id: '7fff1c8cf45507a0c3fe',
+    client_secret: '6a5b66415663f3e4db5fbbd4e2829a5f9b7fb712',
+  },
+})
+gitment.render('gitment-ctn')
+</script>
   
 
 
@@ -417,8 +391,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
