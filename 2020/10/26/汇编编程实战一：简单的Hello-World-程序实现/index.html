@@ -5,13 +5,13 @@
   
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <link rel="dns-prefetch" href="http://example.com">
+  <link rel="dns-prefetch" href="https://jiachengliang.github.io">
   <title>汇编编程实战一：简单的Hello World!程序实现 | DaphneOdera</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="这学期开设了汇编与接口技术课程，博主也是第一次接触汇编语言，所以准备通过博客的形式记录自己的学习日常，里面都是博主本人的理解，如有错误希望多多指正。也欢迎一起探讨。 预备知识：MOV指令，LEA指令，中断指令，伪指令首先展示程序： 1234567891011121314151617DATAS  SEGMENT    STRING  DB  &#39;Hello World!&#39;,13,10,">
 <meta property="og:type" content="article">
 <meta property="og:title" content="汇编编程实战一：简单的Hello World!程序实现">
-<meta property="og:url" content="http://example.com/2020/10/26/%E6%B1%87%E7%BC%96%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%9A%E7%AE%80%E5%8D%95%E7%9A%84Hello-World-%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0/index.html">
+<meta property="og:url" content="https://jiachengliang.github.io/2020/10/26/%E6%B1%87%E7%BC%96%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%9A%E7%AE%80%E5%8D%95%E7%9A%84Hello-World-%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0/index.html">
 <meta property="og:site_name" content="DaphneOdera">
 <meta property="og:description" content="这学期开设了汇编与接口技术课程，博主也是第一次接触汇编语言，所以准备通过博客的形式记录自己的学习日常，里面都是博主本人的理解，如有错误希望多多指正。也欢迎一起探讨。 预备知识：MOV指令，LEA指令，中断指令，伪指令首先展示程序： 1234567891011121314151617DATAS  SEGMENT    STRING  DB  &#39;Hello World!&#39;,13,10,">
 <meta property="og:locale" content="en_US">
@@ -293,7 +293,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://example.com/2020/10/26/%E6%B1%87%E7%BC%96%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%9A%E7%AE%80%E5%8D%95%E7%9A%84Hello-World-%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=https://jiachengliang.github.io/2020/10/26/%E6%B1%87%E7%BC%96%E7%BC%96%E7%A8%8B%E5%AE%9E%E6%88%98%E4%B8%80%EF%BC%9A%E7%AE%80%E5%8D%95%E7%9A%84Hello-World-%E7%A8%8B%E5%BA%8F%E5%AE%9E%E7%8E%B0/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -335,6 +335,32 @@
 
 
   
+    <section id="comments" class="comments">
+      <style>
+        .comments{margin:30px;padding:10px;background:#fff}
+        @media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#fff}}
+      </style>
+      <div id="vcomment" class="comment"></div> 
+<script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="//unpkg.com/valine/dist/Valine.min.js"></script>
+<script>
+   var notify = 'false' == true ? true : false;
+   var verify = 'false' == true ? true : false;
+    window.onload = function() {
+        new Valine({
+            el: '.comment',
+            notify: notify,
+            verify: verify,
+            app_id: "CKvgogzGoEceg0pTLiLushgh-gzGzoHsz",
+            app_key: "QEh2DmWFTuV4w5kdkbT8bmvY",
+            placeholder: "Just go go",
+            avatar:"retro"
+        });
+    }
+</script>
+
+  </section>
+
   
   
   
@@ -447,15 +473,15 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">Automatic System Generation</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color5">测试使用</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">随笔</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">Automatic System Generation</a>
               </li>
              
               <li class="article-tag-list-item">
